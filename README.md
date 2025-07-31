@@ -1,4 +1,4 @@
 # RouterOS fundamental configuration examples
 I’ve noticed a lot of people struggling with RouterOS setups, so I made this lab. These configurations can be used for learning or as a base for your own networks. MikroTik’s help page is solid overall, but it can be tough for newcomers to grasp the concepts and follow isolated examples, so a full network export might be easier to understand. The configurations cover basic ideas that are essential (or useful) for SOHO and larger networks. I’d recommend checking out these concepts on MikroTik’s help page, searching online, or asking a chatbot if you’re unsure - then use these configurations as a reference while experimenting or setting up your own networks.
 
-Make sure you read the lab report to better understand what these configurations are for. 
+Definitely read the lab report first - it explains what these configs are for and why they’re set up that way.  
