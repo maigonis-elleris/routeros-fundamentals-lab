@@ -49,3 +49,8 @@ Known issues, limitations and planned improvements:
     • Configure the guest network to use Opportunistic Wireless Encryption (OWE).
     • No IPv6
     • Documentation is WIP.
+
+
+
+
+If you notice a configuration issue or have suggestions for improving these basic concepts, please let me know. You can raise an issue on GitHub or post in the MikroTik forums’ Knowledge Base section.
