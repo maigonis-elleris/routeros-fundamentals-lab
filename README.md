@@ -6,8 +6,6 @@ Definitely read the lab report first - it explains what these configs are for an
 Configurations are available in two versions: one with VLAN support and one without. The non-VLAN version is made for simple networks that require a single broadcast domain, or for users just starting out. The VLAN version divides a single physical network into multiple logical segments, creating multiple broadcast domains. This is useful for isolating IoT devices or setting up a guest network at home. In the VLAN version, we’ll configure a guest network. Make sure you read the detailed comments below.
 
 
-
-
 Topology plans:
 
 
@@ -39,3 +37,14 @@ Included concepts:
     • RoMON is configured for convenient access. For example, when connecting to a local network over a VPN, you can log in to the server and access all network devices - even if they don’t have an IP address assigned or have been lost, but are still reachable at the MAC level.
     • Other various things like time zone, device naming, Wi-Fi debug logs on R1 for improved troubleshooting, fixed L3 MTU values on bridges, etc.
 
+
+
+
+Known issues, limitations and planned improvements:
+
+    • Sniffing, torch, or any other packet inspection on LTE1 causes a loop. Currently, I don’t know the root cause - the configurations look fine, and all tests show no packet leaks across interfaces. If you need to inspect traffic flow, do it from R1 instead.
+    • The EoIP tunnel in the VLAN config creates a loop due to BPDUs traveling over it, so I had to set "edge=yes" on the logical interfaces at both ends of the tunnel. This breaks STP, as mentioned earlier, so I had to create a new STP region on WBR1.
+    • At first, I also had an interface toggle script running on LTE1 as a safety measure in case the LTE connection fails and doesn’t recover on its own. But setting up a script that toggles the interface every x minutes while the session is down turned out to be more complex than expected.
+    • A more advanced queue example is needed for complex setups and requirements.
+    • No IPv6
+    • Documentation is WIP.
