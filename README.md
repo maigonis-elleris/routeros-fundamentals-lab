@@ -1,12 +1,12 @@
 # RouterOS fundamentals lab
 I’ve noticed a lot of people struggling with RouterOS setups, so I made this lab. These configurations can be used for learning or as a base for your own networks. MikroTik’s help page is solid overall, but it can be tough for newcomers to grasp the concepts and follow isolated examples, so a full network export might be easier to understand. The configurations cover basic ideas that are essential (or useful) for SOHO and larger networks. I’d recommend checking out these concepts on MikroTik’s help page, searching online, or asking a chatbot if you’re unsure - then use these configurations as a reference while experimenting or setting up your own networks.
 
-Definitely read the lab report first - it explains what these configs are for and why they’re set up that way.
+**Definitely read the lab report first** - it explains what these configs are for and why they’re set up that way.
 
-Configurations are available in two versions: one with VLAN support and one without. The non-VLAN version is made for simple networks that require a single broadcast domain, or for users just starting out. The VLAN version divides a single physical network into multiple logical segments, creating multiple broadcast domains. This is useful for isolating IoT devices or setting up a guest network at home. In the VLAN version, we’ll configure a guest network. Make sure you read the detailed comments below.
+Configurations are available in two versions: one with VLAN support and one without.
 
 
-Topology plans:
+**Topology plans:**
 
 
 
@@ -22,7 +22,7 @@ VLAN version
 
 
 
-Included concepts:
+**Included concepts:**
 
     • Topology plan. Every network needs a topology plan to ensure smooth packet flow and scalability.
     • Public internet access is provided via LTE. LTE1 is configured in pass-through mode, with a TTL mangle rule applied on R1.
@@ -40,7 +40,7 @@ Included concepts:
 
 
 
-Known issues, limitations and planned improvements:
+**Known issues, limitations and planned improvements:**
 
     • Sniffing, torch, or any other packet inspection on LTE1 causes a loop. Currently, I don’t know the root cause - the configurations look fine, and all tests show no packet leaks across interfaces. If you need to inspect traffic flow, do it from R1 instead.
     • The EoIP tunnel in the VLAN config creates a loop due to BPDUs traveling over it, so I had to set "edge=yes" on the logical interfaces at both ends of the tunnel. This breaks STP, as mentioned earlier, so I had to create a new STP region on WBR1.
