@@ -46,12 +46,14 @@ DHCP snooping and IGMP snooping are implemented on the core switch (SW1). DHCP s
 
 - Here’s how to disable LTE pass-through on R1 in the non-VLAN version:
 
+```
 /interface/vlan/remove vlan3_passt
 /interface/vlan/remove vlan2_man
 /interface/list/member/remove numbers=0
 /interface/list/member/add interface=ether1 list=WAN
 /ip/dhcp-client/set interface=ether1 numbers=0
 /ip/firewall/mangle/remove numbers=3
+```
 
 - Configure the LTE APN profile as needed and ensure that the modem firmware is updated. For 5G devices, the configuration should be similar or identical to LTE, though I currently don’t have a 5G test device available, nor an eSIM.
 
@@ -73,8 +75,10 @@ AP provisioning happens automatically based on the radio type, with interfaces c
 WireGuard’s basic principle is key exchange - both sides exchange public keys, while private keys stay private. A minimal configuration file includes interface creation and peer setup.
 The interface is a virtual network interface created on the device with specified parameters, including the private key. You can generate the private key when creating a new peer in RouterOS. Here’s a CLI command example for creating a new peer:
 
+```
 /interface/wireguard/peers
 add allowed-address=192.168.80.3/32 comment=Laptop interface=wg1 name=peer3 persistent-keepalive=25s private-key=auto responder=yes
+```
 
 Update the comment, peer name (use a unique one or continue numbering), and set the allowed IP address - pick one after the last used (e.g., 192.168.80.2/32 was the phone’s peer IP). Note that all peers are managed under a single registry, regardless of how many WireGuard interfaces exist on the device. Once created, copy the generated private key into the interface section of your new config file. R1’s DNS server is used by default, but you can change it if needed. The MTU is set to WireGuard’s default.
 The peer represents the remote side’s configuration and usually stays unchanged after initial setup. It defines the endpoint’s IP and port, keepalive interval (heartbeat ping), public key, and allowed IPs. In the config file, the default route (0.0.0.0/0) is used, meaning all traffic from the phone or laptop goes through the VPN. However, you can restrict routing to a specific range, like your local network (192.168.200.0/24) to limit the tunnel to only that range. For example, if you want to use your LTE/5G connection for general internet but only route traffic to local resources like servers or a NAS via the VPN.
