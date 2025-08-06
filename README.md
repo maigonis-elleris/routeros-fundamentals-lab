@@ -46,7 +46,7 @@ VLAN version
     • The EoIP tunnel in the VLAN config creates a loop due to BPDUs traveling over it, so I had to set "edge=yes" on the logical interfaces at both ends of the tunnel. This breaks STP, as mentioned earlier, so I had to create a new STP region on WBR1.
     • At first, I also had an interface toggle script running on LTE1 as a safety measure in case the LTE connection fails and doesn’t recover on its own. But setting up a script that toggles the interface every x minutes while the session is down turned out to be more complex than expected.
     • A more advanced queue example is needed for complex setups and requirements.
-    • Configure the guest network to use Opportunistic Wireless Encryption (OWE).
+    • OWE interfaces are not added to Steering group.
     • No IPv6
     • Documentation is WIP.
 
