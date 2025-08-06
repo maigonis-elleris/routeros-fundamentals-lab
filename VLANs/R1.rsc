@@ -80,58 +80,86 @@ add authentication-types=wpa2-psk connect-priority=0/1 disabled=no \
     disable
 add authentication-types=wpa3-psk connect-priority=0/1 disabled=no ft=yes \
     ft-over-ds=yes name=test_wpa3 passphrase=00000000 wps=disable
+add authentication-types=owe connect-priority=0/1 disabled=no name=test_owe \
+    owe-transition-interface=auto wps=disable
 /interface wifi configuration
 add country=Latvia datapath=datapath_vlan10 disabled=no multicast-enhance=\
     enabled name=ax_main security=test_wpa2/wpa3 ssid=main tx-power=10
-add country=Latvia datapath=datapath_vlan20 disabled=no multicast-enhance=\
-    enabled name=ax_guest security=test_wpa2/wpa3 ssid=guest tx-power=10
+add country=Latvia datapath=datapath_vlan20 disabled=no hide-ssid=yes \
+    multicast-enhance=enabled name=ax_guest_owe security=test_owe \
+    security.authentication-types=owe ssid=guest tx-power=10
 add country=Latvia datapath=datapath_none disabled=no multicast-enhance=\
     enabled name=ac_n_main security=test_wpa2/wpa3 ssid=main tx-power=10
+add country=Latvia datapath=datapath_none disabled=no hide-ssid=yes \
+    multicast-enhance=enabled name=ac_n_guest_owe security=test_owe \
+    security.authentication-types=owe ssid=guest tx-power=10
 add country=Latvia datapath=datapath_none disabled=no multicast-enhance=\
-    enabled name=ac_n_guest security=test_wpa2/wpa3 ssid=guest tx-power=10
+    enabled name=ac_n_guest_owe_transition security=test_owe \
+    security.authentication-types="" ssid=guest tx-power=10
+add country=Latvia datapath=datapath_vlan20 disabled=no multicast-enhance=\
+    enabled name=ax_guest_owe_transition security=test_owe \
+    security.authentication-types="" ssid=guest tx-power=10
 /interface wifi
 # operated by CAP 192.168.210.4, traffic processing on CAP
-add channel=2G-CH1 channel.frequency=2412 configuration=ax_main \
-    configuration.mode=ap .tx-power=6 datapath.interface-list=WLAN_2.4G \
-    disabled=no mac-address=06:00:00:7E:C3:B6 name=AP1-2G radio-mac=\
-    F4:1E:57:2D:CD:80
+add channel=2G-CH1 configuration=ax_main configuration.mode=ap .tx-power=6 \
+    datapath.interface-list=WLAN_2.4G disabled=no mac-address=\
+    06:00:00:0B:0F:53 name=AP1-2G radio-mac=F4:1E:57:2D:CD:80
 # operated by CAP 192.168.210.4, traffic processing on CAP
-add configuration=ax_guest configuration.mode=ap datapath.interface-list=\
-    WLAN_2.4G disabled=no mac-address=06:00:00:A7:64:94 master-interface=\
+add configuration=ax_guest_owe configuration.mode=ap datapath.interface-list=\
+    WLAN_2.4G disabled=no mac-address=06:00:00:A7:52:74 master-interface=\
     AP1-2G name=AP1-2G-GUEST
 # operated by CAP 192.168.210.4, traffic processing on CAP
+add configuration=ax_guest_owe_transition configuration.mode=ap \
+    datapath.interface-list=WLAN_2.4G disabled=no mac-address=\
+    06:00:00:3C:96:A7 master-interface=AP1-2G name=AP1-2G-GUEST2
+# operated by CAP 192.168.210.4, traffic processing on CAP
 add channel="5G-CH36 40mhz" configuration=ax_main configuration.mode=ap \
-    datapath.interface-list=WLAN_5G disabled=no mac-address=06:00:00:EB:23:D9 \
+    datapath.interface-list=WLAN_5G disabled=no mac-address=06:00:00:80:F7:59 \
     name=AP1-5G radio-mac=F4:1E:57:2D:CD:81
 # operated by CAP 192.168.210.4, traffic processing on CAP
-add configuration=ax_guest configuration.mode=ap datapath.interface-list=\
-    WLAN_5G disabled=no mac-address=06:00:00:5D:60:B2 master-interface=AP1-5G \
+add configuration=ax_guest_owe configuration.mode=ap datapath.interface-list=\
+    WLAN_5G disabled=no mac-address=06:00:00:AE:06:30 master-interface=AP1-5G \
     name=AP1-5G-GUEST
+# operated by CAP 192.168.210.4, traffic processing on CAP
+add configuration=ax_guest_owe_transition configuration.mode=ap \
+    datapath.interface-list=WLAN_5G disabled=no mac-address=06:00:00:79:5F:3C \
+    master-interface=AP1-5G name=AP1-5G-GUEST2
 # operated by CAP 192.168.210.5, traffic processing on CAP
-add channel=2G-CH6 channel.frequency=2437 configuration=ac_n_main \
-    configuration.mode=ap .tx-power=6 datapath.interface-list=WLAN_2.4G \
-    disabled=no mac-address=06:00:00:5C:61:72 name=AP2-2G radio-mac=\
-    C4:AD:34:C5:F0:9B
+add channel=2G-CH6 configuration=ac_n_main configuration.mode=ap .tx-power=6 \
+    datapath.interface-list=WLAN_2.4G disabled=no mac-address=\
+    06:00:00:59:EA:A0 name=AP2-2G radio-mac=C4:AD:34:C5:F0:9B
 # operated by CAP 192.168.210.5, traffic processing on CAP
-add configuration=ac_n_guest configuration.mode=ap datapath.interface-list=\
-    WLAN_2.4G disabled=no mac-address=06:00:00:4E:D6:74 master-interface=\
-    AP2-2G name=AP2-2G-GUEST
+add configuration=ac_n_guest_owe configuration.mode=ap \
+    datapath.interface-list=WLAN_2.4G disabled=no mac-address=\
+    06:00:00:5E:6A:7B master-interface=AP2-2G name=AP2-2G-GUEST
+# operated by CAP 192.168.210.5, traffic processing on CAP
+add configuration=ac_n_guest_owe_transition configuration.mode=ap \
+    datapath.interface-list=WLAN_2.4G disabled=no mac-address=\
+    06:00:00:FB:76:EE master-interface=AP2-2G name=AP2-2G-GUEST2
 # operated by CAP 192.168.210.5, traffic processing on CAP
 add channel="5G-AUTO 40mhz" configuration=ac_n_main configuration.mode=ap \
-    datapath.interface-list=WLAN_5G disabled=no mac-address=06:00:00:CD:92:8C \
+    datapath.interface-list=WLAN_5G disabled=no mac-address=06:00:00:74:16:88 \
     name=AP2-5G radio-mac=C4:AD:34:C5:F0:9C
 # operated by CAP 192.168.210.5, traffic processing on CAP
-add configuration=ac_n_guest configuration.mode=ap datapath.interface-list=\
-    WLAN_5G disabled=no mac-address=06:00:00:44:FD:09 master-interface=AP2-5G \
-    name=AP2-5G-GUEST
+add configuration=ac_n_guest_owe configuration.mode=ap \
+    datapath.interface-list=WLAN_5G disabled=no mac-address=06:00:00:7D:31:4D \
+    master-interface=AP2-5G name=AP2-5G-GUEST
+# operated by CAP 192.168.210.5, traffic processing on CAP
+add configuration=ac_n_guest_owe_transition configuration.mode=ap \
+    datapath.interface-list=WLAN_5G disabled=no mac-address=06:00:00:C4:F8:D7 \
+    master-interface=AP2-5G name=AP2-5G-GUEST2
 # operated by CAP 192.168.210.6, traffic processing on CAP
 add channel=2G-AUTO configuration=ac_n_main configuration.mode=ap \
     datapath.interface-list=WLAN_2.4G disabled=no mac-address=\
-    06:00:00:1F:4A:CE name=WBR1-2G radio-mac=C4:AD:34:D9:4B:06
+    06:00:00:12:7C:9D name=WBR1-2G radio-mac=C4:AD:34:D9:4B:06
 # operated by CAP 192.168.210.6, traffic processing on CAP
-add configuration=ac_n_guest configuration.mode=ap datapath.interface-list=\
-    WLAN_2.4G disabled=no mac-address=06:00:00:EF:DE:CF master-interface=\
-    WBR1-2G name=WBR1-2G-GUEST
+add configuration=ac_n_guest_owe configuration.mode=ap \
+    datapath.interface-list=WLAN_2.4G disabled=no mac-address=\
+    06:00:00:3B:05:5F master-interface=WBR1-2G name=WBR1-2G-GUEST
+# operated by CAP 192.168.210.6, traffic processing on CAP
+add configuration=ac_n_guest_owe_transition configuration.mode=ap \
+    datapath.interface-list=WLAN_2.4G disabled=no mac-address=\
+    06:00:00:7A:93:93 master-interface=WBR1-2G name=WBR1-2G-GUEST2
 /ip pool
 add name=dhcp_pool_10_main ranges=192.168.210.21-192.168.210.254
 add name=dhcp_pool_20_guest ranges=192.168.220.21-192.168.220.254
@@ -184,17 +212,21 @@ set enabled=yes interfaces=vlan10_main package-path=/ \
     require-peer-certificate=no upgrade-policy=suggest-same-version
 /interface wifi provisioning
 add action=create-enabled comment=2G-AX disabled=no master-configuration=\
-    ax_main name-format=%I-2G slave-configurations=ax_guest \
-    slave-name-format=%I-2G-GUEST supported-bands=2ghz-ax
+    ax_main name-format=%I-2G slave-configurations=\
+    ax_guest_owe,ax_guest_owe_transition slave-name-format=%I-2G-GUEST \
+    supported-bands=2ghz-ax
 add action=create-enabled comment=5G-AX disabled=no master-configuration=\
-    ax_main name-format=%I-5G slave-configurations=ax_guest \
-    slave-name-format=%I-5G-GUEST supported-bands=5ghz-ax
+    ax_main name-format=%I-5G slave-configurations=\
+    ax_guest_owe,ax_guest_owe_transition slave-name-format=%I-5G-GUEST \
+    supported-bands=5ghz-ax
 add action=create-enabled comment=2G-N disabled=no master-configuration=\
-    ac_n_main name-format=%I-2G slave-configurations=ac_n_guest \
-    slave-name-format=%I-2G-GUEST supported-bands=2ghz-n
+    ac_n_main name-format=%I-2G slave-configurations=\
+    ac_n_guest_owe,ac_n_guest_owe_transition slave-name-format=%I-2G-GUEST \
+    supported-bands=2ghz-n
 add action=create-enabled comment=5G-AC disabled=no master-configuration=\
-    ac_n_main name-format=%I-5G slave-configurations=ac_n_guest \
-    slave-name-format=%I-5G-GUEST supported-bands=5ghz-ac
+    ac_n_main name-format=%I-5G slave-configurations=\
+    ac_n_guest_owe,ac_n_guest_owe_transition slave-name-format=%I-5G-GUEST \
+    supported-bands=5ghz-ac
 /interface wireguard peers
 add allowed-address=192.168.80.2/32 comment=Phone interface=wg1 name=peer1 \
     persistent-keepalive=25s private-key=\

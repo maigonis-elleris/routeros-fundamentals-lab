@@ -4,17 +4,21 @@ add admin-mac=02:00:00:09:3C:3A auto-mac=no frame-types=\
     protocol-mode=mstp region-name=test2 region-revision=1 vlan-filtering=yes
 /interface wifi
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
-# mode: AP, SSID: main, channel: 2442/n
+# mode: AP, SSID: main, channel: 2467/n
 set [ find default-name=wifi1 ] configuration.manager=capsman .mode=ap \
-    disabled=no mac-address=06:00:00:1F:4A:CE
+    disabled=no mac-address=06:00:00:12:7C:9D
 set [ find default-name=wifi2 ] comment=PTP configuration.country=Latvia \
     .manager=local .mode=station-bridge .ssid=main .tx-power=10 disabled=no \
     mac-address=06:00:00:9F:5F:52 security.authentication-types=\
     wpa2-psk,wpa3-psk .passphrase=00000000
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
 # mode: AP, SSID: guest
-add configuration.mode=ap disabled=no mac-address=06:00:00:EF:DE:CF \
+add configuration.mode=ap disabled=no mac-address=06:00:00:3B:05:5F \
     master-interface=wifi1 name=wifi3
+# managed by CAPsMAN 192.168.210.1, traffic processing on CAP
+# mode: AP, SSID: guest
+add configuration.mode=ap disabled=no mac-address=06:00:00:7A:93:93 \
+    master-interface=wifi1 name=wifi4
 /interface eoip
 add comment="WBR1 L2 tunnel" mac-address=00:00:5E:80:00:01 name=eoip-tunnel1 \
     remote-address=192.168.210.1 tunnel-id=0
@@ -32,6 +36,8 @@ add bridge=bridge1 edge=yes frame-types=\
     admit-only-untagged-and-priority-tagged interface=wifi1 pvid=10
 add bridge=bridge1 edge=yes frame-types=\
     admit-only-untagged-and-priority-tagged interface=wifi3 pvid=20
+add bridge=bridge1 edge=yes frame-types=\
+    admit-only-untagged-and-priority-tagged interface=wifi4 pvid=20
 add bridge=bridge1 edge=yes frame-types=admit-only-vlan-tagged interface=\
     eoip-tunnel1
 /ip neighbor discovery-settings

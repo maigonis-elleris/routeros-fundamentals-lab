@@ -8,19 +8,27 @@ set [ find default-name=ether1 ] comment=SW1
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
 # mode: AP, SSID: main, channel: 2437/n
 set [ find default-name=wifi1 ] configuration.manager=capsman .mode=ap \
-    disabled=no mac-address=06:00:00:5C:61:72
+    disabled=no mac-address=06:00:00:59:EA:A0
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
 # mode: AP, SSID: main, channel: 5500/ac/Ce/D
 set [ find default-name=wifi2 ] configuration.manager=capsman .mode=ap \
-    disabled=no mac-address=06:00:00:CD:92:8C
+    disabled=no mac-address=06:00:00:74:16:88
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
 # mode: AP, SSID: guest
-add configuration.mode=ap disabled=no mac-address=06:00:00:4E:D6:74 \
+add configuration.mode=ap disabled=no mac-address=06:00:00:5E:6A:7B \
     master-interface=wifi1 name=wifi3
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
 # mode: AP, SSID: guest
-add configuration.mode=ap disabled=no mac-address=06:00:00:44:FD:09 \
-    master-interface=wifi2 name=wifi4
+add configuration.mode=ap disabled=no mac-address=06:00:00:FB:76:EE \
+    master-interface=wifi1 name=wifi4
+# managed by CAPsMAN 192.168.210.1, traffic processing on CAP
+# mode: AP, SSID: guest
+add configuration.mode=ap disabled=no mac-address=06:00:00:7D:31:4D \
+    master-interface=wifi2 name=wifi5
+# managed by CAPsMAN 192.168.210.1, traffic processing on CAP
+# mode: AP, SSID: guest
+add configuration.mode=ap disabled=no mac-address=06:00:00:C4:F8:D7 \
+    master-interface=wifi2 name=wifi6
 /interface vlan
 add comment="Main network" interface=bridge1 name=vlan10_main vlan-id=10
 /interface list
@@ -44,9 +52,13 @@ add bridge=bridge1 edge=yes frame-types=\
 add bridge=bridge1 edge=yes frame-types=\
     admit-only-untagged-and-priority-tagged interface=wifi1 pvid=10
 add bridge=bridge1 edge=yes frame-types=\
+    admit-only-untagged-and-priority-tagged interface=wifi6 pvid=20
+add bridge=bridge1 edge=yes frame-types=\
     admit-only-untagged-and-priority-tagged interface=wifi3 pvid=20
 add bridge=bridge1 edge=yes frame-types=\
     admit-only-untagged-and-priority-tagged interface=wifi4 pvid=20
+add bridge=bridge1 edge=yes frame-types=\
+    admit-only-untagged-and-priority-tagged interface=wifi5 pvid=20
 add bridge=bridge1 edge=yes frame-types=\
     admit-only-untagged-and-priority-tagged interface=wifi2 pvid=10
 /ip neighbor discovery-settings

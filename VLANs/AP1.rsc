@@ -14,19 +14,27 @@ add bridge=bridge1 disabled=no name=datapath1
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
 # mode: AP, SSID: main, channel: 2412/ax
 set [ find default-name=wifi1 ] configuration.manager=capsman .mode=ap \
-    datapath=datapath1 disabled=no mac-address=06:00:00:7E:C3:B6
+    datapath=datapath1 disabled=no mac-address=06:00:00:0B:0F:53
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
 # mode: AP, SSID: main, channel: 5180/ax/Ce/I
 set [ find default-name=wifi2 ] configuration.manager=capsman .mode=ap \
-    datapath=datapath1 disabled=no mac-address=06:00:00:EB:23:D9
+    datapath=datapath1 disabled=no mac-address=06:00:00:80:F7:59
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
 # mode: AP, SSID: guest
 add configuration.mode=ap datapath=datapath1 disabled=no mac-address=\
-    06:00:00:A7:64:94 master-interface=wifi1 name=wifi3
+    06:00:00:A7:52:74 master-interface=wifi1 name=wifi3
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
 # mode: AP, SSID: guest
 add configuration.mode=ap datapath=datapath1 disabled=no mac-address=\
-    06:00:00:5D:60:B2 master-interface=wifi2 name=wifi4
+    06:00:00:3C:96:A7 master-interface=wifi1 name=wifi4
+# managed by CAPsMAN 192.168.210.1, traffic processing on CAP
+# mode: AP, SSID: guest
+add configuration.mode=ap datapath=datapath1 disabled=no mac-address=\
+    06:00:00:AE:06:30 master-interface=wifi2 name=wifi5
+# managed by CAPsMAN 192.168.210.1, traffic processing on CAP
+# mode: AP, SSID: guest
+add configuration.mode=ap datapath=datapath1 disabled=no mac-address=\
+    06:00:00:79:5F:3C master-interface=wifi2 name=wifi6
 /queue type
 set 2 kind=fq-codel
 /interface bridge msti
