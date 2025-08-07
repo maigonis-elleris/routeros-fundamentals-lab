@@ -25,8 +25,8 @@ VLAN version
 **Included concepts:**
 
     • Topology plan. Every network needs a topology plan to ensure smooth packet flow and scalability.
-    • Public internet access is provided via LTE. LTE1 is configured in pass-through mode, with a TTL mangle rule applied on R1.
-    • STP (Spanning Tree Protocol) configuration is important. As MikroTik’s help page says, not quite: “You need to configure STP if your network has more than two bridges.” VLAN configurations use MSTP (Multiple Spanning Tree Protocol), which is VLAN-aware, while RSTP (Rapid Spanning Tree Protocol), used in non-VLAN setups, is the default mode and isn’t VLAN-aware.
+    • Public internet access is provided via LTE. LTE1 is configured in pass-through mode.
+    • STP (Spanning Tree Protocol). RSTP for non-VLAN and MSTP for VLAN version.
     • VLANs are divided into two groups: the main network (VLAN 10) and the guest network (VLAN 20).
     • Simple IP addressing provided by DHCP server(s), including static leases.
     • New Wave2 CAPsMAN is used for Wi-Fi management.
@@ -35,7 +35,7 @@ VLAN version
     • Basic firewall. The default configuration firewall is fine, but I think it includes several unnecessary rules for a basic setup.
     • Interface lists on R1 are used for CAPsMAN ACLs and firewall filters, including NAT and LTE mangle rules.
     • RoMON is configured for convenient access.
-    • Other various things like time zone, device naming, Wi-Fi debug logs on R1 for improved troubleshooting, fixed L3 MTU values on bridges, etc.
+    • Other various things like time zone, device naming, Wi-Fi debug logs, etc.
 
 
 
