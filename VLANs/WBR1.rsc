@@ -8,9 +8,9 @@ add admin-mac=02:00:00:09:3C:3A auto-mac=no frame-types=\
 set [ find default-name=wifi1 ] configuration.manager=capsman .mode=ap \
     disabled=no mac-address=06:00:00:12:7C:9D
 set [ find default-name=wifi2 ] comment=PTP configuration.country=Latvia \
-    .manager=local .mode=station-bridge .ssid=main .tx-power=10 disabled=no \
+    .manager=local .mode=station-bridge .ssid=main .station-roaming=yes .tx-power=10 disabled=no \
     mac-address=06:00:00:9F:5F:52 security.authentication-types=\
-    wpa2-psk,wpa3-psk .passphrase=00000000
+    wpa2-psk,wpa3-psk .ft=yes .passphrase=00000000
 # managed by CAPsMAN 192.168.210.1, traffic processing on CAP
 # mode: AP, SSID: guest
 add configuration.mode=ap disabled=no mac-address=06:00:00:3B:05:5F \
@@ -74,12 +74,5 @@ set enabled=no
 set allowed-interface-list=LAN
 /tool mac-server mac-winbox
 set allowed-interface-list=LAN
-/tool netwatch
-add comment="Toggle PTP WLAN interface if no connection over 10sec" disabled=\
-    no down-script=":log info message=\"PTP link down, toggling interface\"\
-    \n/interface/set disabled=yes wifi2\
-    \n/interface/set disabled=no wifi2" host=192.168.210.1 interval=10s \
-    startup-delay=2m test-script="" type=simple up-script=\
-    ":log info message=\"PTP link up\""
 /tool romon
 set enabled=yes secrets=0000

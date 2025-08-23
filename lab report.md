@@ -69,8 +69,6 @@ AP provisioning happens automatically based on the radio type, with interfaces c
 
 - AP1 and AP2 have identical configurations in the non-VLAN setup, with the only difference being the number of ports in the bridge. VLAN configurations differ, as the wifi-qcom-ac package has certain limitations. Keep this in mind when setting up. The CAPsMAN server is manually defined, as L2 connections (default discovery behavior) can be unstable in some cases.
 
-- The PTP link has a netwatch script on the WBR1 side, which I implemented to address reconnection issues when the connection to the AP drops (MikroTik confirmed this issue — a fix should land at some point). The script triggers an interface toggle, and the connection should be restored within 30 seconds.
-
 - VPN server requires a static IP address. WireGuard configuration example is included (phone0.conf in the wg folder), which can be imported to your phone, laptop, or any other compatible device - or you can manually enter the values. This can serve as a base configuration for Road Warrior setups. Just remember to update the endpoint IP address and port (if changed) before using it.
     WireGuard’s basic principle is key exchange - both sides exchange public keys, while private keys stay private. A minimal configuration file includes interface creation and peer setup.
     The interface is a virtual network interface created on the device with specified parameters, including the private key. You can generate the private key when creating a new peer in RouterOS. Here’s a CLI command example for creating a new peer:

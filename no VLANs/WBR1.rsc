@@ -9,9 +9,9 @@ add bridge=bridge1 disabled=no name=datapath1
 set [ find default-name=wifi2 ] configuration.manager=capsman .mode=ap \
     datapath=datapath1 disabled=no mac-address=06:00:00:1F:4A:CE name=wifi1
 set [ find default-name=wifi1 ] comment=PTP configuration.country=Latvia \
-    .manager=local .mode=station-bridge .ssid=test .tx-power=10 datapath=\
+    .manager=local .mode=station-bridge .ssid=test .station-roaming=yes .tx-power=10 datapath=\
     datapath1 disabled=no mac-address=06:00:00:9F:5F:52 name=wifi2 \
-    security.authentication-types=wpa2-psk,wpa3-psk .passphrase=00000000
+    security.authentication-types=wpa2-psk,wpa3-psk .ft=yes .passphrase=00000000
 /interface bridge port
 add bridge=bridge1 edge=yes interface=ether1
 add bridge=bridge1 edge=yes interface=ether2
@@ -38,10 +38,5 @@ set channel=testing
 set auto-upgrade=yes
 /tool bandwidth-server
 set enabled=no
-/tool netwatch
-add comment="Toggle PTP WLAN interface if no connection over 10sec" disabled=no down-script=\
-    ":log info message=\"PTP link down, toggling interface\"\
-    \n/interface/set disabled=yes wifi2\
-    \n/interface/set disabled=no wifi2" host=192.168.200.1 interval=10s startup-delay=2m test-script="" type=simple up-script=":log info message=\"PTP link up\""
 /tool romon
 set enabled=yes secrets=0000
