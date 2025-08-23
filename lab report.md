@@ -111,7 +111,7 @@ VLANs add complexity to the network, which means you might need better hardware.
 
 - Network flow was tested from every point in the topology to confirm performance expectations and ensure frames are delivered correctly - no sequencing issues, leaks, unneeded fragmentation, or other problems. Tests were run using  iperf3 and the Bandwidth Test tool.
 
-- The lab was initially built on RouterOS 7.20 beta6.
+- Latest lab changes are tested on RouterOS 7.20 beta9.
 
 
 **Known issues, limitations and planned improvements**
